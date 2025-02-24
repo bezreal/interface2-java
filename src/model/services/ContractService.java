@@ -4,11 +4,13 @@ import model.entities.Contract;
 import model.entities.Installment;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class ContractService {
 
 
     private OnlinePaymentService onlinePaymentService;
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public ContractService(OnlinePaymentService onlinePaymentService) {
         this.onlinePaymentService = onlinePaymentService;
@@ -23,7 +25,7 @@ public class ContractService {
             double valuerT = valuePerMonth + onlinePaymentService.interest(valuePerMonth, (i+1)) + onlinePaymentService.paymentFee(valuePerMonth);
             contract.setInstallment(new Installment(nextPayment, valuerT));
 
-            System.out.println(contract.getInstallment().getDueDate() + " - " + contract.getInstallment().getAmount());
+            System.out.println(contract.getInstallment().getDueDate().format(dtf) + " - " + contract.getInstallment().getAmount());
         }
 
     }

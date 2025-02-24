@@ -1,14 +1,11 @@
 package app;
 
 import model.entities.Contract;
-import model.entities.Installment;
 import model.services.ContractService;
 import model.services.PaypalService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -17,25 +14,30 @@ public class Program {
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        System.out.println("Entre com os dados do contrato: ");
-        System.out.print("Numéro: ");
+        
+        System.out.println("Enter with contract data ");
+            
+        System.out.print("Number of contract: ");            
         int number = sc.nextInt();
         sc.nextLine();
-        System.out.print("Data (dd/MM/yyyy): ");
+
+        System.out.print("Date (dd/MM/yyyy): ");
         LocalDate date = LocalDate.parse(sc.nextLine(), dtf);
-        System.out.print("Valor do contrato: ");
+
+        System.out.print("Contract value: ");
         double totalValue = sc.nextDouble();
 
         Contract contract = new Contract(number, date, totalValue);
-
-        System.out.println("Entre com o numero de parcelas: ");
+        
+        System.out.println("Enter the number of installments: ");
         int parcels = sc.nextInt();
-
+            
         ContractService contractService = new ContractService(new PaypalService());
-
+            
         contractService.proccessContract(contract, parcels);
+        
 
         sc.close();
+        
     }
 }
